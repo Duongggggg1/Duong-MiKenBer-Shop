@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Dương MikenBer ShopShop - Bán hàng online</title>
+  <!-- ✅ Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .product-img {
+      max-height: 180px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="#">🛒 Dương MikenBer Shop </a>
+    </div>
+  </nav>
+
+  <!-- Product List -->
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://pion.vn/wp-content/uploads/2022/05/Ao-thun-Ao-choang-bang-gia-T-Shirt-Oversize-Back-Mau-Den.jpg" class="card-img-top product-img" alt="Sản phẩm 1">
+          <div class="card-body text-center">
+            <h5 class="card-title">Áo choàng băng giá </h5>
+            <p class="card-text text-danger fw-bold">1.0000.000đ</p>
+            <button class="btn btn-success" onclick="addToCart('Sản phẩm 1', 1000000)">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://pion.vn/wp-content/uploads/2022/05/Ao-thun-Ao-choang-than-ra-T-Shirt-Oversize-Back-Mau-Den.jpg" class="card-img-top product-img" alt="Sản phẩm 2">
+          <div class="card-body text-center">
+            <h5 class="card-title">Áo choàng lửa </h5>
+            <p class="card-text text-danger fw-bold">1.5000.000đ</p>
+            <button class="btn btn-success" onclick="addToCart('Sản phẩm 2', 1500000)">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://th.bing.com/th/id/R.e6399efe1b95af91107cc133bdb13bf8?rik=nR1VFcyTmTCmnw&pid=ImgRaw&r=0" class="card-img-top product-img" alt="Sản phẩm 3">
+          <div class="card-body text-center">
+            <h5 class="card-title">Giày du mục </h5>
+            <p class="card-text text-danger fw-bold">2.0000.000đ</p>
+            <button class="btn btn-success" onclick="addToCart('Sản phẩm 3', 2000000)">Mua ngay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart -->
+  <div class="container my-5">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        🛍️ Giỏ hàng của bạn
+      </div>
+      <div class="card-body">
+        <div id="cart-items" class="mb-3"></div>
+        <h5>Tổng tiền: <span id="total">0</span> VNĐ</h5>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-3">
+    <p>Liên hệ: phamngocduong2k5gtv@ | Facebook: 
+      <a href="https://facebook.com/ngocduongdzquahihi" class="text-white">ngocduongdzquahihi</a></p>
+  </footer>
+
+  <script>
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  let total = 0;
+
+  function renderCart() {
+    const cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = '';
+    total = 0;
+    cart.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "d-flex justify-content-between align-items-center mb-2";
+
+      const p = document.createElement("p");
+      p.className = "mb-0";
+      p.textContent = `${item.name} - ${item.price.toLocaleString()} VNĐ`;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "🗑️ Xoá";
+      delBtn.className = "btn btn-sm btn-danger";
+      delBtn.onclick = () => removeFromCart(index);
+
+      div.appendChild(p);
+      div.appendChild(delBtn);
+      cartItems.appendChild(div);
+
+      total += item.price;
+    });
+
+    document.getElementById("total").textContent = total.toLocaleString();
+  }
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+  }
+
+  window.onload = renderCart;
+</script>
+
+
+
